@@ -3,16 +3,12 @@ import express from "express"
 const app = express()
 
 
-
-Usuarios
-Tweets
-Comentarios
-Likes
-
-
-
 app.get("/saludar" , function(req, res){
-    res.send('Hola Mundo')
+    const nombre = req.query.nombre
+    const edad = req.query.edad
+    res.send('Hola ' + nombre + ' tu edad es: ' + edad)
+})
+app.post("/enviar" , function(req, res){
 })
 
 app.listen(3000)
