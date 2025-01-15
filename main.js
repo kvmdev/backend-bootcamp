@@ -1,4 +1,8 @@
 import express from 'express'
+import {PrismaClient} from '@prisma/client'
+
+
+const prisma = new PrismaClient()
 
 const app = express()
 
@@ -10,8 +14,11 @@ Likes
 
 */
 
-app.get('/saludar', function(req, res){
-    res.send('Hola, en que puedo ayudarte')
-} )
+app.get('/tweet', async function (req, res) {
+    const Tweets = await prisma.tweet.findMany()
+    res.json(Tweets)
+    
+    
+})
 
 app.listen (3000)
