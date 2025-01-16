@@ -9,32 +9,31 @@ datasource db {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  nombre      String
-  email       String
-  password    String
-  role        String        @default("user")
-  Tweets      Tweets[]
-  Comentarios Comentarios[]
+  id         Int          @id @default(autoincrement())
+  nombre     String
+  email      String
+  password   String
+
+  role       String       @default("user")
+  Comentario Comentario[]
+  Tweet      Tweet[]
 }
 
-model Tweets {
+model Comentario {
   id        Int    @id @default(autoincrement())
   contenido String
-  usuario   User   @relation(fields: [userId], references: [id])
-
-  userId      Int
-  likes       Int           @default(0)
-  comentarios Comentarios[]
+  userId    Int
+  likes     Int    @default(0)
+  tweetId   Int?
+  Tweet     Tweet? @relation(fields: [tweetId], references: [id])
+  User      User   @relation(fields: [userId], references: [id])
 }
 
-model Comentarios {
-  id        Int    @id @default(autoincrement())
-  contenido String
-  usuario   User   @relation(fields: [userId], references: [id])
-
-  userId   Int
-  likes    Int     @default(0)
-  Tweets   Tweets? @relation(fields: [tweetsId], references: [id])
-  tweetsId Int?
+model Tweet {
+  id         Int          @id @default(autoincrement())
+  contenido  String
+  userId     Int
+  likes      Int          @default(0)
+  Comentario Comentario[]
+  User       User         @relation(fields: [userId], references: [id])
 }
