@@ -8,30 +8,31 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  nombre String
-  email String
-  password String
-  role String @default('user')
-  Tweet Tweet[]
+model User {
+  id         Int          @id @default(autoincrement())
+  nombre     String
+  email      String @unique
+  password   String
+  role       String       @default("user")
+  Tweet      Tweet[]
   Comentario Comentario[]
 }
 
 model Tweet {
- id Int @id @default(autoincrement)
- contenido String
- Usuario User @relation(fields: [userId])
- userId Int
- likes Int @default(0)
+  id          Int          @id @default(autoincrement())
+  contenido   String
+  usuario     User         @relation(fields: [userId], references: [id])
+  userId      Int
+  likes       Int          @default(0)
+  comentarios Comentario[]
 }
 
-model Comentario{
-Id Int @id @default(autoincrement())
+model Comentario {
+  id        Int    @id @default(autoincrement())
   contenido String
-  usuario User
-  userId Int
-  likes Int @default(0)
-  Tweet Tweet? @relation(fields: [tweetId], references: [id])
-  tweetId Int?
-  }
+  usuario   User   @relation(fields: [userId], references: [id])
+  userId    Int
+  likes     Int    @default(0)
+  Tweet     Tweet? @relation(fields: [tweetId], references: [id])
+  tweetId   Int?
+}
