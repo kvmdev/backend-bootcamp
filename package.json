@@ -9,9 +9,15 @@
   "devDependencies": {
     "prisma": "^6.2.1"
   },
+<<<<<<< HEAD
   "name": "curso-junior",
   "version": "1.0.0",
   "main": "main.js",
+=======
+  "name": "bootcamp-git",
+  "version": "1.0.0",
+  "main": "index.js",
+>>>>>>> kevin
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,4 +26,8 @@
   "author": "",
   "license": "ISC",
   "description": ""
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> kevin
