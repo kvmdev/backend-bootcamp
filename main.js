@@ -1,5 +1,4 @@
 import express from 'express'
-import { getAllUsers } from './controllers/Users'
 import { commentTweet, createTweet, getAllTweets, likeTweet } from './controllers/Tweet'
 import { login, register } from './controllers/auth'
 import dotenv from 'dotenv'
