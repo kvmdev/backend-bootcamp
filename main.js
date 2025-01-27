@@ -1,5 +1,5 @@
 import express from 'express'
-import { createUser, getAllUsers } from './controllers/Users'
+import { getAllUsers } from './controllers/Users'
 import { createTweet, getAllTweets } from './controllers/Tweet'
 import { login, register } from './controllers/auth'
 import dotenv from 'dotenv'
