@@ -1,13 +1,23 @@
 import express from 'express'
-import { PrismaClient } from '@prisma/client'
+import { createUser, getAllUsers } from './controllers/Users'
+import { createTweet, getAllTweets } from './controllers/Tweet'
+import { login, register } from './controllers/auth'
+import dotenv from 'dotenv'
 
-const prisma = new PrismaClient()
+dotenv.config()
 
 const app = express()
 
-app.get('/tweet', async function (req, res){
-    const tweets = await prisma.tweet.findMany()
-    res.json(tweets)
-})
+app.use(express.json())
+
+app.post('/login', login)
+
+app.post('/register', register)
+
+app.get('/users', getAllUsers)
+
+app.post('/tweet', createTweet)
+
+app.get('/tweets', getAllTweets)
 
 app.listen(3000)
