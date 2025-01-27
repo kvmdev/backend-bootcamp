@@ -1,6 +1,6 @@
 import express from 'express'
 import { getAllUsers } from './controllers/Users'
-import { createTweet, getAllTweets } from './controllers/Tweet'
+import { commentTweet, createTweet, getAllTweets, likeTweet } from './controllers/Tweet'
 import { login, register } from './controllers/auth'
 import dotenv from 'dotenv'
 
@@ -14,7 +14,9 @@ app.post('/login', login)
 
 app.post('/register', register)
 
-app.get('/users', getAllUsers)
+app.post('/tweet/:tweetId/:userId/like', likeTweet)
+
+app.post('/tweet/:tweetId/:userId/comment', commentTweet)
 
 app.post('/tweet', createTweet)
 
