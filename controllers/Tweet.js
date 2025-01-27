@@ -6,7 +6,7 @@ export const createTweet = async (req, res)=> {
         const tweet = await prisma.tweet.create({
             data: {
                 contenido,
-                userId: 1
+                userId: parseInt(userId)
             }
         })
         if(tweet) {
@@ -22,6 +22,42 @@ export const getAllTweets = async (req, res)=> {
     try {
         const tweets = await prisma.tweet.findMany()
         res.json(tweets)
+    } catch (error) {
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+export const likeTweet = async (req, res)=> {
+    try {
+        const { tweetId } = req.params
+        await prisma.tweet.update({
+            where: {
+                tweetId: parseInt(tweetId)
+            }, 
+            data: {
+                likes: {
+                    increment: 1
+                }
+            }
+        })
+        res.json({message: 'Liked successfully'})
+    } catch (error) {
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+export const commentTweet = async (req, res)=> {
+    try {
+        const { userId, tweetId } = req.params
+        const { contenido } = req.body
+        const comment = await prisma.comentario.create({
+            where: {
+                tweetId: parseInt(tweetId)
+            },
+            data: {
+                contenido,
+                userId: parseInt(userId)
+            }
+        })
+        res.json(comment)
     } catch (error) {
         res.status(500).json({message: 'Internal server error'})
     }
