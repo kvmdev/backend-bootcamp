@@ -16,9 +16,9 @@ app.post('/register', register)
 
 app.post('/tweet', validateToken, createTweet)
 
-app.post('/tweet/:tweetId/:userId/like', likeTweet)
+app.post('/tweet/:tweetId/like', likeTweet)
 
-app.post('/tweet/:tweetId/:userId/comment', commentTweet)
+app.post('/tweet/:tweetId/comment', commentTweet)
 
 app.get('/tweets', getAllTweets)
 
