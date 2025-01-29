@@ -1,7 +1,8 @@
 import express from 'express'
-import { commentTweet, createTweet, getAllTweets, likeTweet } from './controllers/Tweet'
-import { login, register } from './controllers/auth'
+import { commentTweet, createTweet, getAllTweets, likeTweet } from './controllers/Tweet.js'
+import { login, register } from './controllers/auth.js'
 import dotenv from 'dotenv'
+import { validateToken } from './middleware/auth.js'
 
 dotenv.config()
 
@@ -13,12 +14,14 @@ app.post('/login', login)
 
 app.post('/register', register)
 
+app.post('/tweet', validateToken, createTweet)
+
 app.post('/tweet/:tweetId/:userId/like', likeTweet)
 
 app.post('/tweet/:tweetId/:userId/comment', commentTweet)
 
-app.post('/tweet', createTweet)
-
 app.get('/tweets', getAllTweets)
 
-app.listen(3000)
+app.listen(3000, ()=> {
+    console.log('http://localhost:3000')
+})
