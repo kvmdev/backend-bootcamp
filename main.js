@@ -1,30 +1,27 @@
-import express from "express";
-import { PrismaClient } from "@prisma/client";
-import session from "express-session"
-import { createTweet, getTweets, likeTweet } from "./controllers/TweetController.js";
-import { getUsuarios, login, registrar } from "./controllers/UserController.js";
+import express from 'express'
+import { commentTweet, createTweet, getAllTweets, likeTweet } from './controllers/Tweet.js'
+import { login, register } from './controllers/auth.js'
+import dotenv from 'dotenv'
+import { validateToken } from './middleware/auth.js'
 
-const app = express();
+dotenv.config()
 
-app.use(
-  session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, maxAge: 60000 } // Cambiar a 'false' para desarrollo local
-  })
-);
+const app = express()
 
-app.get("/usuarios", getUsuarios);
+app.use(express.json())
 
-app.get("/registrar", registrar);
+app.post('/login', login)
 
-app.get("/login", login);
+app.post('/register', register)
 
-app.get("/tweet", createTweet);
+app.post('/tweet', validateToken, createTweet)
 
-app.get("/tweets", getTweets);
+app.post('/tweet/:tweetId/:userId/like', likeTweet)
 
-app.get("/tweet/:id/like", likeTweet);
+app.post('/tweet/:tweetId/:userId/comment', commentTweet)
 
-app.listen(3000);
+app.get('/tweets', getAllTweets)
+
+app.listen(3000, ()=> {
+    console.log('http://localhost:3000')
+})
