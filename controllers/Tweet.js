@@ -2,11 +2,11 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 export const createTweet = async (req, res)=> {
     try {
-        const { contenido, userId } = req.body
+        const { contenido } = req.body
         const tweet = await prisma.tweet.create({
             data: {
                 contenido,
-                userId: parseInt(userId)
+                userId: req.user.id
             }
         })
         if(tweet) {
@@ -20,7 +20,11 @@ export const createTweet = async (req, res)=> {
 }
 export const getAllTweets = async (req, res)=> {
     try {
-        const tweets = await prisma.tweet.findMany()
+        const tweets = await prisma.tweet.findMany({
+            orderBy: {
+                id: "desc"
+            }
+        })
         res.json(tweets)
     } catch (error) {
         res.status(500).json({message: 'Internal server error'})
