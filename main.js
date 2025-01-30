@@ -18,11 +18,11 @@ app.post('/register', register)
 
 app.post('/tweet', validateToken, createTweet)
 
-app.post('/tweet/:tweetId/like', likeTweet)
+app.post('/tweet/:tweetId/like', validateToken, likeTweet)
 
-app.post('/tweet/:tweetId/comment', commentTweet)
+app.post('/tweet/:tweetId/comment', validateToken, commentTweet)
 
-app.get('/tweets', getAllTweets)
+app.get('/tweets', validateToken, getAllTweets)
 
 app.listen(3000, ()=> {
     console.log('http://localhost:3000')
