@@ -34,7 +34,7 @@ export const register = async (req, res) => {
             }
         })
         const token = jwt.sign(user, SECRET_KEY, {expiresIn: '24h'})
-        res.json({message: 'Created successfully', token})
+        res.json({message: 'Created successfully', token, user: {nombre: user.nombre, email: user.email}})
     } catch (error) {
         res.status(500).json({message: 'Internal server error', error})
     }
