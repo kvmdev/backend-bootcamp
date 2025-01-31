@@ -1,28 +1,29 @@
 import express from 'express'
-import { PrismaClient } from '@prisma/client'
-import session from 'express-session'
-import { createTweet, getTweets, likeTweet } from './Controllers/TweetController.js'
-import { getUsuarios, login, registrar } from './Controllers/UserController.js'
+import { commentTweet, createTweet, getAllTweets, likeTweet } from './controllers/Tweet.js'
+import { login, register } from './controllers/auth.js'
+import dotenv from 'dotenv'
+import { validateToken } from './middleware/auth.js'
+import cors from 'cors'
+
+dotenv.config()
 
 const app = express()
 
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, naxAge: 60000 }
-}))
+app.use(express.json())
+app.use(cors())
 
-app.get('/usuarios', getUsuarios)
+app.post('/login', login)
 
-app.get('/user', registrar)
+app.post('/register', register)
 
-app.get('/tweet', createTweet)
+app.post('/tweet', validateToken, createTweet)
 
-app.get('/tweets', getTweets)
+app.post('/tweet/:tweetId/like', validateToken, likeTweet)
 
-app.get('/tweet/:id/like', likeTweet)
+app.post('/tweet/:tweetId/comment', validateToken, commentTweet)
 
-app.get('/login' , login)
+app.get('/tweets', validateToken, getAllTweets)
 
-app.listen(3000)
+app.listen(3000, ()=> {
+    console.log('http://localhost:3000')
+})

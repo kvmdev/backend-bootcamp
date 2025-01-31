@@ -14,8 +14,8 @@ model User {
   email      String       @unique
   password   String
   role       String       @default("user")
-  Tweet      Tweet[]
-  Comentario Comentario[]
+  tweets      Tweet[]
+  comentarios Comentario[]
 }
 
 model Tweet {
@@ -25,6 +25,8 @@ model Tweet {
   userId      Int
   likes       Int          @default(0)
   comentarios Comentario[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Comentario {
