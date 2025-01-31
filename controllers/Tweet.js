@@ -22,7 +22,7 @@ export const createTweet = async (req, res)=> {
         res.status(500).json({error})
     }
 }
-export const getAllTweets = async (req, res)=> {
+export const getAllTweets = async (req, res) => {
     try {
         const tweets = await prisma.tweet.findMany({
             include: {
@@ -31,19 +31,31 @@ export const getAllTweets = async (req, res)=> {
                         nombre: true,
                         email: true
                     }
-                } 
+                }
+            },
+            orderBy: {
+                id: 'desc'
             }
-        })
-        res.json(tweets)
-        console.log(tweets)
+        });
+        res.json(tweets);
+        console.log(tweets);
     } catch (error) {
-        res.status(500).json({message: 'Internal server error', error})
+        res.status(500).json({ message: 'Internal server error', error });
     }
-}
+};
 export const getTweet = async (req, res) => {
     try {
         const tweet = await prisma.tweet.findUnique({
-            where: { id: parseInt(req.params.id) }
+            where: { id: parseInt(req.params.id) },
+            include: {
+                usuario: {
+                    select: {
+                        nombre: true,
+                        email: true
+                        
+                    }
+                }
+            }
         });
         if (!tweet) {
             return res.status(404).json({ message: 'Tweet not found' });
@@ -107,7 +119,17 @@ export const getComment = async (req, res)=> {
         const comments = await prisma.comentario.findMany({
             where: {
                 tweetId: parseInt(tweetId)
+            },
+            include: {
+                usuario: {
+                    select: {
+                        nombre: true,
+                        email: true
+                        
+                    }
+                }
             }
+            
         })
         res.json(comments)
     } catch (error) {
