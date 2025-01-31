@@ -25,16 +25,22 @@ export const getAllTweets = async (req, res)=> {
         const tweets = await prisma.tweet.findMany({
             select: {
                 createdAt: true,
-                updatedAt: true
-            },
-            include: {
+                updatedAt: true,
+                usuario: {
+                    select: {
+                        nombre: true,
+                        email: true
+                    }
+                }
+            }
+            /* include: {
                 usuario: {
                     select: {
                         nombre: true,
                         email: true,
                     }
                 }
-            }
+            } */
         })
         res.json(tweets)
     } catch (error) {
