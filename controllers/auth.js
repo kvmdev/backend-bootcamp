@@ -15,6 +15,7 @@ export const login = async (req, res)=> {
         })
         if(user && user.password == password) {
             const token = jwt.sign(user, SECRET_KEY, {expiresIn: '24h'})
+            req.user = {id: user.id}
             res.json({message: 'Has iniciado sesion', token, user: {nombre: user.nombre, email: user.email}})
         } else {
             res.status(404).json({message: 'Usuario o password incorrecto'})
