@@ -23,11 +23,15 @@ export const createTweet = async (req, res)=> {
 export const getAllTweets = async (req, res)=> {
     try {
         const tweets = await prisma.tweet.findMany({
+            select: {
+                createdAt: true,
+                updatedAt: true
+            },
             include: {
                 usuario: {
                     select: {
                         nombre: true,
-                        email: true
+                        email: true,
                     }
                 }
             }
