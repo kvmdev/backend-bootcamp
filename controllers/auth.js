@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import jwt from 'jsonwebtoken'
 
-const SECRET_KEY = process.env.JWT_KEY
+const SECRET_KEY = "secure-password"
 
 const prisma = new PrismaClient()
 

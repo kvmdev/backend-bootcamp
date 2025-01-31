@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = process.env.JWT_KEY;
+const SECRET_KEY = "secure-password";
 
 export const validateToken = (req, res, next)=> {
     try {
