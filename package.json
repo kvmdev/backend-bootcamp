@@ -14,7 +14,7 @@
   },
   "name": "bootcamp-git",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "node --watch main.js",
