@@ -31,4 +31,4 @@ app.get('/tweet/:id', validateToken, getTweet)
 
 
 
-export default app;
+module.exports = app;
