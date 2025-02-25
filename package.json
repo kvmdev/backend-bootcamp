@@ -18,7 +18,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch main.js",
-    "start": "node main.js"
+    "start": "node main.js",
+    "build": "echo 'No build process required for this project'"
   },
   "keywords": [],
   "author": "",
